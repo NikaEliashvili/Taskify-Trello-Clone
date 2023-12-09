@@ -1,4 +1,4 @@
-"use-client";
+"use client";
 
 import { useFormStatus } from "react-dom";
 
@@ -9,14 +9,14 @@ interface FormSubmitProps {
   children: React.ReactNode;
   disabled?: boolean;
   className?: string;
-  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost";
+  variant?: "primary" | "default" | "destructive" | "outline" | "secondary" | "ghost";
 }
 
 export const FormSubmit = ({
   children,
   disabled,
   className,
-  variant,
+  variant = "primary",
 }: FormSubmitProps) => {
   const { pending } = useFormStatus();
 
