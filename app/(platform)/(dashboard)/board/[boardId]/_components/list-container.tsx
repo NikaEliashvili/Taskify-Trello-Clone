@@ -24,25 +24,34 @@ function reorder<T>(list: T[], startIndex: number, endIndex: number) {
   return result;
 }
 
-const ListContainer = ({ data, boardId }: ListContainerProps) => {
+export const ListContainer = ({
+  data,
+  boardId,
+}: ListContainerProps) => {
   const [orderedData, setOrderedData] = useState(data);
 
-  const { execute: executeUpdateListOrder } = useAction(updateListOrder, {
-    onSuccess: () => {
-      toast.success("List reordered");
-    },
-    onError: (error) => {
-      toast.error(error);
-    },
-  });
-  const { execute: executeUpdateCardOrder } = useAction(updateCardOrder, {
-    onSuccess: () => {
-      toast.success("Card reordered");
-    },
-    onError: (error) => {
-      toast.error(error);
-    },
-  });
+  const { execute: executeUpdateListOrder } = useAction(
+    updateListOrder,
+    {
+      onSuccess: () => {
+        toast.success("List reordered");
+      },
+      onError: (error) => {
+        toast.error(error);
+      },
+    }
+  );
+  const { execute: executeUpdateCardOrder } = useAction(
+    updateCardOrder,
+    {
+      onSuccess: () => {
+        toast.success("Card reordered");
+      },
+      onError: (error) => {
+        toast.error(error);
+      },
+    }
+  );
 
   useEffect(() => {
     setOrderedData(data);
@@ -64,9 +73,11 @@ const ListContainer = ({ data, boardId }: ListContainerProps) => {
 
     // User moves a list
     if (type === "list") {
-      const items = reorder(orderedData, source.index, destination.index).map(
-        (item, index) => ({ ...item, order: index })
-      );
+      const items = reorder(
+        orderedData,
+        source.index,
+        destination.index
+      ).map((item, index) => ({ ...item, order: index }));
       setOrderedData(items);
       executeUpdateListOrder({ items, boardId });
     }
@@ -140,7 +151,11 @@ const ListContainer = ({ data, boardId }: ListContainerProps) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="lists" type="list" direction="horizontal">
+      <Droppable
+        droppableId="lists"
+        type="list"
+        direction="horizontal"
+      >
         {(provided) => (
           <ol
             {...provided.droppableProps}
@@ -159,5 +174,3 @@ const ListContainer = ({ data, boardId }: ListContainerProps) => {
     </DragDropContext>
   );
 };
-
-export default ListContainer;

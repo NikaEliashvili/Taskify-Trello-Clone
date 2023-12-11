@@ -5,9 +5,9 @@ import { Plus } from "lucide-react";
 import React from "react";
 import { FormPopOver } from "@/components/form/form-popover";
 
-import MobileSidebar from "./mobile-sidebar";
+import { MobileSidebar } from "./mobile-sidebar";
 
-function Navbar() {
+export function Navbar() {
   return (
     <nav className="fixed top-0 z-50 px-4 w-full h-14 border-b shadow-sm bg-white flex items-center">
       <MobileSidebar />
@@ -65,5 +65,3 @@ function Navbar() {
     </nav>
   );
 }
-
-export default Navbar;

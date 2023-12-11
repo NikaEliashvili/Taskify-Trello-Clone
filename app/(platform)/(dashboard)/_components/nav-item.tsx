@@ -29,7 +29,7 @@ interface NavItemProps {
   onExpand: (id: string) => void;
 }
 
-export default function NavItem({
+export function NavItem({
   isExpanded,
   isActive,
   organization,
@@ -82,7 +82,9 @@ export default function NavItem({
               className="rounded-sm object-cover"
             />
           </div>
-          <span className="font-medium txt-sm">{organization.name}</span>
+          <span className="font-medium txt-sm">
+            {organization.name}
+          </span>
         </div>
       </AccordionTrigger>
       <AccordionContent className="pt-1 text-neutral-700">

@@ -1,4 +1,3 @@
-import { CopySlash } from "lucide-react";
 import { create } from "zustand";
 
 type MobileSidebarStore = {

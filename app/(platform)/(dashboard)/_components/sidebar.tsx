@@ -8,35 +8,36 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Accordion } from "@/components/ui/accordion";
-import NavItem, { Organization } from "./nav-item";
+import { NavItem, Organization } from "./nav-item";
 
 interface SidebarProps {
   storageKey?: string;
 }
 
-function Sidebar({ storageKey = "t-sidebar-state" }: SidebarProps) {
-  const [expanded, setExpanded] = useLocalStorage<Record<string, any>>(
-    storageKey,
-    {}
-  );
+export function Sidebar({
+  storageKey = "t-sidebar-state",
+}: SidebarProps) {
+  const [expanded, setExpanded] = useLocalStorage<
+    Record<string, any>
+  >(storageKey, {});
 
   const { organization: activeOrganization, isLoaded: isLoadedOrg } =
     useOrganization();
-  const { userMemberships, isLoaded: isLoadedOrgList } = useOrganizationList({
-    userMemberships: {
-      infinite: true,
-    },
-  });
+  const { userMemberships, isLoaded: isLoadedOrgList } =
+    useOrganizationList({
+      userMemberships: {
+        infinite: true,
+      },
+    });
 
-  const defaultAccordionValue: string[] = Object.keys(expanded).reduce(
-    (acc: string[], key: string) => {
-      if (expanded[key]) {
-        acc.push(key);
-      }
-      return acc;
-    },
-    []
-  );
+  const defaultAccordionValue: string[] = Object.keys(
+    expanded
+  ).reduce((acc: string[], key: string) => {
+    if (expanded[key]) {
+      acc.push(key);
+    }
+    return acc;
+  }, []);
   const onExpand = (id: string) => {
     setExpanded((curr) => ({
       ...curr,
@@ -96,5 +97,3 @@ function Sidebar({ storageKey = "t-sidebar-state" }: SidebarProps) {
     </>
   );
 }
-
-export default Sidebar;
