@@ -1,7 +1,10 @@
 import { FormPopOver } from "@/components/form/form-popover";
 import Hint from "@/components/hint";
 import { Skeleton } from "@/components/ui/skeleton";
+import { MAX_FREE_BOARDS } from "@/constants/boards";
 import { db } from "@/lib/db";
+import { getAvailableCount } from "@/lib/org-limit";
+import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs";
 import { HelpCircle, User2 } from "lucide-react";
 import Link from "next/link";
@@ -23,6 +26,8 @@ export const BoardList = async () => {
     },
   });
 
+  const availableCount = await getAvailableCount();
+  const isPro = await checkSubscription();
   return (
     <div className="space-y-4 ">
       <div className="flex items-center font-semibold text-lg text-neutral-700">
@@ -38,7 +43,9 @@ export const BoardList = async () => {
             style={{ backgroundImage: `url(${board.imageThumbUrl})` }}
           >
             <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition" />
-            <p className="relative font-semibold text-white">{board.title}</p>
+            <p className="relative font-semibold text-white">
+              {board.title}
+            </p>
           </Link>
         ))}
         <FormPopOver sideOffset={10} side="right">
@@ -47,7 +54,11 @@ export const BoardList = async () => {
             className="aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col gap-y-1 items-center justify-center hover:opacity-75 transition"
           >
             <p className="text-sm ">Create new board</p>
-            <span className="text-xs">5 remaining</span>
+            <span className="text-xs">
+              {isPro
+                ? "Unlimited"
+                : `${MAX_FREE_BOARDS - availableCount} remaining`}
+            </span>
             <Hint
               sideoffset={40}
               description={`Free Workspaces can have up to 5 open boards. For unlimited boards upgrade this workspace`}

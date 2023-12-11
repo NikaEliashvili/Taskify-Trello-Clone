@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { FormPicker } from "./form-picker";
 import { ElementRef, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 interface FormPopOverProps {
   children: React.ReactNode;
@@ -32,6 +33,8 @@ export const FormPopOver = ({
   side,
   sideOffset,
 }: FormPopOverProps) => {
+  const proModal = useProModal();
+
   const router = useRouter();
   const closeRef = useRef<ElementRef<"button">>(null);
 
@@ -42,8 +45,8 @@ export const FormPopOver = ({
       router.push(`/board/${data.id}`);
     },
     onError: (error) => {
-      console.log({ error });
       toast.error(error);
+      proModal.onOpen();
     },
   });
 
