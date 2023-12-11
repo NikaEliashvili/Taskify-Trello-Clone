@@ -54,6 +54,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             ref={ref}
             required={required}
             name={id}
+            onChange={() => {}}
             id={id}
             placeholder={placeholder}
             type={type}
